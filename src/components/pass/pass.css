@@ -753,7 +753,7 @@
    ========================================================================== */
 .pass-footer-ribbon {
   position: absolute;
-  bottom: 12px;
+  bottom: 0;
   left: 0;
   width: 100%;
   background-color: rgba(214, 59, 104, 0.5); /* 50% transparency */
