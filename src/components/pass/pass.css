@@ -807,6 +807,7 @@
 }
 
 .theme-neon .pass-footer-ribbon {
+  bottom: 35px;
   background: 
     radial-gradient(ellipse at 25% 50%, rgba(255, 0, 255, 0.35) 0%, transparent 70%),
     radial-gradient(ellipse at 75% 50%, rgba(0, 255, 255, 0.25) 0%, transparent 70%),
