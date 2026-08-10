@@ -9,6 +9,7 @@ interface BuilderFormProps {
   onChange: (updated: Partial<BuilderProfile>) => void;
   onGenerateNewId: () => void;
   onDownload: () => void;
+  onDownloadPDF?: () => void;
   onShare: () => void;
   isExporting?: boolean;
 }
@@ -18,6 +19,7 @@ export const BuilderForm: React.FC<BuilderFormProps> = ({
   onChange,
   onGenerateNewId,
   onDownload,
+  onDownloadPDF,
   onShare,
   isExporting = false,
 }) => {
@@ -164,15 +166,31 @@ export const BuilderForm: React.FC<BuilderFormProps> = ({
 
       {/* Action Buttons */}
       <div className="form-actions">
-        <button
-          type="button"
-          className="btn-primary-action download-btn"
-          onClick={onDownload}
-          disabled={isExporting}
-        >
-          <Download size={18} />
-          {isExporting ? 'Generating High-Res PNG...' : 'Download Builder Pass PNG'}
-        </button>
+        <div style={{ display: 'flex', gap: '8px', width: '100%', marginBottom: '12px' }}>
+          <button
+            type="button"
+            className="btn-primary-action download-btn"
+            onClick={onDownload}
+            disabled={isExporting}
+            style={{ flex: 1, padding: '12px 10px', fontSize: '14px' }}
+          >
+            <Download size={18} />
+            {isExporting ? 'Exporting...' : 'PNG (2160x2700)'}
+          </button>
+
+          {onDownloadPDF && (
+            <button
+              type="button"
+              className="btn-primary-action download-btn"
+              onClick={onDownloadPDF}
+              disabled={isExporting}
+              style={{ flex: 1, padding: '12px 10px', fontSize: '14px', background: 'var(--accent-red)' }}
+            >
+              <Download size={18} />
+              4K PDF
+            </button>
+          )}
+        </div>
 
         <button
           type="button"

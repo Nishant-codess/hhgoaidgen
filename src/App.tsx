@@ -3,7 +3,7 @@ import { BuilderProfile } from './types/builder';
 import { generateBuilderId, generateSerialNo } from './lib/generateId';
 import { BuilderPass } from './components/pass/BuilderPass';
 import { BuilderForm } from './components/builder/BuilderForm';
-import { exportPassAsPng } from './lib/exportPass';
+import { exportPassAsPng, exportPassAsPDF } from './lib/exportPass';
 import { shareNativeOrFallback } from './lib/shareToX';
 import { PalmIllustration } from './assets/illustrations/Palm';
 import { SunIllustration } from './assets/illustrations/Sun';
@@ -65,6 +65,21 @@ export function App() {
     }
   };
 
+  const handleDownloadPDF = async () => {
+    if (!cardRef.current) return;
+    setIsExporting(true);
+    try {
+      const fileName = `${profile.name.replace(/\s+/g, '_')}_HH_Goa_2026_Pass.pdf`;
+      await exportPassAsPDF(cardRef.current, fileName);
+      showToast('🎉 4K PDF downloaded successfully!');
+    } catch (err) {
+      console.error(err);
+      showToast('❌ PDF Export failed. Please try again.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const handleShare = async () => {
     try {
       showToast('🚀 Opening Share flow for #FrameInGoa...');
@@ -115,6 +130,7 @@ export function App() {
               onChange={handleProfileChange}
               onGenerateNewId={handleGenerateNewId}
               onDownload={handleDownload}
+              onDownloadPDF={handleDownloadPDF}
               onShare={handleShare}
               isExporting={isExporting}
             />
@@ -138,16 +154,26 @@ export function App() {
               </div>
 
               {/* Quick Actions under preview */}
-              <div className="preview-bottom-bar">
+              <div className="preview-bottom-bar" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 <button
                   type="button"
                   className="quick-btn download"
                   onClick={handleDownload}
                   disabled={isExporting}
+                  style={{ flex: 1 }}
                 >
-                  ⚡ High-Res PNG Export (2160×2700)
+                  ⚡ PNG (2160×2700)
                 </button>
-                <button type="button" className="quick-btn share" onClick={handleShare}>
+                <button
+                  type="button"
+                  className="quick-btn download"
+                  onClick={handleDownloadPDF}
+                  disabled={isExporting}
+                  style={{ flex: 1, background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)' }}
+                >
+                  📄 4K PDF
+                </button>
+                <button type="button" className="quick-btn share" onClick={handleShare} style={{ flex: '1 1 100%' }}>
                   🌴 Share #FrameInGoa
                 </button>
               </div>
