@@ -11,6 +11,38 @@ import { ShellIllustration } from '../../assets/illustrations/Shell';
 import { PassportMarks } from '../../assets/illustrations/PassportMarks';
 import './pass.css';
 
+const DecorativeSparkle = ({ 
+  top, left, right, bottom, 
+  size = 18, 
+  rotation = 0, 
+  opacity = 1,
+  color 
+}: { 
+  top?: string | number, left?: string | number, right?: string | number, bottom?: string | number, 
+  size?: number, 
+  rotation?: number,
+  opacity?: number,
+  color: string 
+}) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg" 
+    style={{ 
+      position: 'absolute', 
+      top, left, right, bottom, 
+      transform: `rotate(${rotation}deg)`,
+      opacity,
+      zIndex: 3,
+      pointerEvents: 'none'
+    }}
+  >
+    <path d="M12 0C12 8.4 15.6 12 24 12C15.6 12 12 15.6 12 24C12 15.6 8.4 12 0 12C8.4 12 12 8.4 12 0Z" fill={color} />
+  </svg>
+);
+
 interface BuilderPassProps {
   profile: BuilderProfile;
 }
@@ -96,16 +128,30 @@ export const BuilderPass = forwardRef<HTMLDivElement, BuilderPassProps>(
               
               <img src="/assets/decorations/tag.png" className="dec-tag" alt="" />
               <img src="/assets/decorations/stamp.png" className="dec-stamp" alt="" />
-              <img src="/assets/decorations/circle_stamp.png" className="dec-circle-stamp" alt="" />
               <img src="/assets/decorations/signpost.png" className="dec-signpost" alt="" />
               <img src="/assets/decorations/beach_hut.png" className="dec-hut" alt="" />
               <img src="/assets/decorations/sticker.png" className="dec-sticker" alt="" />
+              
+              {/* Scattered Decorative Sparkles */}
+              <div className="dec-sparkles-container">
+                <DecorativeSparkle top="15%" left="8%" size={20} rotation={15} color={colors.accent} opacity={0.9} />
+                <DecorativeSparkle top="12%" right="8%" size={14} rotation={-10} color={colors.accent} opacity={0.8} />
+                <DecorativeSparkle top="26%" right="28%" size={12} rotation={45} color={colors.accent} opacity={0.7} />
+                <DecorativeSparkle top="32%" left="35%" size={16} rotation={5} color={colors.accent} opacity={0.85} />
+                <DecorativeSparkle top="40%" right="10%" size={22} rotation={-15} color={colors.accent} opacity={0.9} />
+                <DecorativeSparkle top="50%" left="22%" size={18} rotation={25} color={colors.accent} opacity={0.8} />
+                <DecorativeSparkle top="58%" right="12%" size={15} rotation={30} color={colors.accent} opacity={0.75} />
+                <DecorativeSparkle top="65%" right="30%" size={14} rotation={-20} color={colors.accent} opacity={0.7} />
+                <DecorativeSparkle bottom="270px" left="15px" size={16} rotation={10} color={colors.accent} opacity={0.85} />
+                <DecorativeSparkle bottom="290px" right="30px" size={20} rotation={-5} color={colors.accent} opacity={0.9} />
+                <DecorativeSparkle bottom="220px" left="80px" size={12} rotation={45} color={colors.accent} opacity={0.6} />
+                <DecorativeSparkle bottom="200px" right="90px" size={16} rotation={15} color={colors.accent} opacity={0.8} />
+              </div>
             </>
           )}
           {templateTheme === 'neon' && (
             <>
-              {/* Fallback neon decorations */}
-              <div className="neon-grid-overlay"></div>
+              {/* Neon glow ambience (kept for cyberpunk identity) */}
               <div className="neon-glow-blob blob-1"></div>
               <div className="neon-glow-blob blob-2"></div>
             </>
@@ -147,11 +193,17 @@ export const BuilderPass = forwardRef<HTMLDivElement, BuilderPassProps>(
             </div>
 
             <div className="name-banner" style={{ fontSize: nameFontSize }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="name-sparkle">
+                <path d="M12 0C12 8.4 15.6 12 24 12C15.6 12 12 15.6 12 24C12 15.6 8.4 12 0 12C8.4 12 12 8.4 12 0Z" fill={colors.accent} />
+              </svg>
               {templateTheme === 'neon' ? (
                 <span className="gradient-text">{displayName}</span>
               ) : (
                 displayName
               )}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="name-sparkle">
+                <path d="M12 0C12 8.4 15.6 12 24 12C15.6 12 12 15.6 12 24C12 15.6 8.4 12 0 12C8.4 12 12 8.4 12 0Z" fill={colors.accent} />
+              </svg>
             </div>
 
             <div className="role-pill">

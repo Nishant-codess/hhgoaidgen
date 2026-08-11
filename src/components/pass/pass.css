@@ -82,6 +82,12 @@
 /* Theme: Neon */
 .theme-neon {
   background-color: #060c1a;
+  background-image: 
+    linear-gradient(rgba(6, 12, 26, 0.75), rgba(6, 12, 26, 0.75)),
+    url('/assets/backgrounds/sunset_beach.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border: 4px solid rgba(30, 41, 59, 0.8);
   box-shadow: 0 0 30px rgba(251, 191, 36, 0.3), inset 0 0 20px rgba(251, 191, 36, 0.1);
   color: #FFFFFF;
@@ -155,8 +161,8 @@
 
 .dec-shell {
   position: absolute;
-  bottom: 230px;
-  left: 20px;
+  bottom: 280px;
+  right: 25px;
   z-index: 10;
   color: #E96A83;
   opacity: 0.8;
@@ -178,12 +184,12 @@
 
 .dec-stamp {
   position: absolute;
-  top: 25%;
-  left: -5px;
+  top: 28%;
+  right: 40px;
   width: 100px;
   z-index: 2;
   opacity: 0.9;
-  transform: rotate(-10deg);
+  transform: rotate(-15deg);
 }
 
 .dec-circle-stamp {
@@ -199,7 +205,7 @@
 .dec-signpost {
   position: absolute;
   left: 5px;
-  top: 45%;
+  top: 38%;
   transform: translateY(-50%);
   width: 110px;
   z-index: 4;
@@ -207,20 +213,27 @@
 
 .dec-hut {
   position: absolute;
-  right: -25px;
-  bottom: 215px;
-  width: 165px;
+  left: 5px;
+  bottom: 330px;
+  width: 130px;
   z-index: 4;
 }
 
 .dec-sticker {
   position: absolute;
-  left: 5px;
-  bottom: 225px;
+  right: 15px;
+  bottom: 215px;
   width: 100px;
   z-index: 10;
-  transform: rotate(-25deg);
+  transform: rotate(15deg);
   filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.15));
+}
+
+.dec-sparkles-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
 }
 
 /* ==========================================================================
@@ -384,9 +397,9 @@
   position: absolute;
   inset: -2px; /* Reduced thickness to half */
   border-radius: 50%;
-  background: linear-gradient(to right, #fcd34d, #fda4af, #67e8f9);
+  background: #142B6F;
   z-index: -1;
-  box-shadow: 0 0 15px 4px rgba(253, 164, 175, 0.6), 0 0 25px 8px rgba(103, 232, 249, 0.3); /* Stronger glow effect */
+  box-shadow: 0 0 10px rgba(20, 43, 111, 0.5); /* Subtle dark-blue glow */
 }
 
 .photo-border-ring {
@@ -426,6 +439,10 @@
   z-index: 10;
   max-width: 90%;
   white-space: nowrap;
+}
+
+.name-sparkle {
+  flex-shrink: 0;
 }
 
 .theme-light .name-banner {
