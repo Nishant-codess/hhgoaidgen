@@ -82,7 +82,57 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </section>
 
+      {/* Feature Showcase Cards Section */}
+      <section className="features-section">
+        <div className="features-inner">
+          <div className="features-grid">
+            <div
+              className="feature-glass-card"
+              onClick={onNavigateToGenerator}
+              role="button"
+              tabIndex={0}
+            >
+              <span className="feature-card-icon">🏖️</span>
+              <span className="feature-card-tag">LIGHT BEACH PASSPORT</span>
+              <h3 className="feature-card-title">Tropical Passport</h3>
+              <p className="feature-card-desc">
+                Warm palm visuals, vintage boarding stamps, custom serial numbers, and 2160×2700 4K PNG export.
+              </p>
+            </div>
+
+            <div
+              className="feature-glass-card"
+              onClick={onNavigateToGenerator}
+              role="button"
+              tabIndex={0}
+            >
+              <span className="feature-card-icon">🌃</span>
+              <span className="feature-card-tag">NEON CYBERPUNK</span>
+              <h3 className="feature-card-title">Hacker Terminal</h3>
+              <p className="feature-card-desc">
+                Dark cyberpunk aesthetic, matrix grid, neon green highlights, and instant PDF print ready layout.
+              </p>
+            </div>
+
+            <div
+              className="feature-glass-card"
+              onClick={onNavigateToGenerator}
+              role="button"
+              tabIndex={0}
+            >
+              <span className="feature-card-icon">🚀</span>
+              <span className="feature-card-tag">INSTANT SOCIAL SHARE</span>
+              <h3 className="feature-card-title">Share #FrameInGoa</h3>
+              <p className="feature-card-desc">
+                One-tap sharing directly to X (Twitter) with pre-filled event tags and automatic high-res preview attachment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* About Section Strip */}
+
       <section className="about-strip">
         <div className="about-inner">
           <div className="about-grid">
