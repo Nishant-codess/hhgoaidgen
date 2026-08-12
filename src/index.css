@@ -1,22 +1,41 @@
-/* ==========================================================================
-   GLOBAL APP STYLES & LAYOUT SYSTEM
-   Hacker House Goa 2026 — Builder Pass Engine
-   ========================================================================== */
-
 :root {
-  --app-bg: #0C1E19;
-  --app-card-bg: #142B24;
-  --app-card-border: #1E3F35;
-  --app-text: #F4E9D0;
-  --app-muted: #8AA49B;
-  --app-accent-yellow: #F2C230;
-  --app-accent-pink: #D63B68;
-  --app-accent-green: #063F32;
-  --app-hover-glow: rgba(242, 194, 48, 0.15);
+  /* Authentic HH Goa Brand Color Palette */
+  --brand-green: #0B6839;
+  --brand-green-dark: #052C17;
+  --brand-green-mid: #084D2A;
+  --brand-green-light: #0F8A4A;
+  --brand-yellow: #F5D800;
+  --brand-yellow-dim: #D4BC00;
+  --brand-pink: #FF2D84;
+  --brand-pink-dark: #CC1F65;
+  --brand-cream: #F5EDD6;
+  --brand-white: #FAFAF8;
+  --brand-black: #0A0A08;
+
+  /* Legacy Mapping for Compatibility */
+  --app-bg: var(--brand-green-dark);
+  --app-card-bg: #084d2aa6;
+  --app-card-border: rgba(245, 216, 0, 0.28);
+  --app-text: var(--brand-white);
+  --app-muted: rgba(250, 250, 248, 0.7);
+  --app-accent-yellow: var(--brand-yellow);
+  --app-accent-pink: var(--brand-pink);
+  --app-accent-green: var(--brand-green);
+  --app-hover-glow: rgba(245, 216, 0, 0.2);
   
-  --font-display: 'Fraunces', serif;
-  --font-mono: 'Space Mono', monospace;
-  --font-sans: 'Outfit', sans-serif;
+  /* Typography Tokens */
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-deva: 'Rozha One', serif;
+  --font-serif: 'Playfair Display', serif;
+
+  /* Radius System */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --r-pill: 999px;
 }
 
 * {
@@ -25,14 +44,72 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: var(--app-bg);
-  color: var(--app-text);
-  font-family: var(--font-sans);
+  background-color: var(--brand-green-dark);
+  color: var(--brand-white);
+  font-family: var(--font-body);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--brand-green-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brand-green-mid);
+  border-radius: 5px;
+  border: 2px solid var(--brand-green-dark);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-yellow);
+}
+
+/* Global Entrance & Micro Animations */
+@keyframes lpFadeUp {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lpFadeDown {
+  0% { opacity: 0; transform: translateY(-12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lpScaleIn {
+  0% { opacity: 0; transform: scale(0.94); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes lpOrbBreathe {
+  0%, 100% { opacity: 0.65; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+
+@keyframes floatUpNDown {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(6deg); }
+}
+
+@keyframes blinkDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.7); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(245, 216, 0, 0.4)); }
+  50% { filter: drop-shadow(0 0 40px rgba(245, 216, 0, 0.7)); }
+}
+
 
 /* Background Effects */
 .app-layout {
