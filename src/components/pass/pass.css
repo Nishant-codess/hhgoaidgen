@@ -179,7 +179,7 @@
 .dec-stamp {
   position: absolute;
   top: 25%;
-  left: -5px;
+  left: 10px;
   width: 100px;
   z-index: 2;
   opacity: 0.9;
@@ -188,8 +188,8 @@
 
 .dec-circle-stamp {
   position: absolute;
-  top: 60%;
-  right: -5px;
+  top: 62%;
+  right: 15px;
   width: 90px;
   z-index: 2;
   opacity: 0.8;
@@ -207,10 +207,11 @@
 
 .dec-hut {
   position: absolute;
-  right: -25px;
-  bottom: 215px;
-  width: 165px;
+  right: 10px;
+  top: 47%;
+  width: 140px;
   z-index: 4;
+  transform: translateY(-50%);
 }
 
 .dec-sticker {
@@ -413,13 +414,16 @@
 .name-banner {
   background-color: #063F32;
   color: #F8F4E6;
-  padding: 8px 32px;
+  padding: 12px 32px;
   border-radius: 8px;
   font-family: 'Outfit', sans-serif;
   font-weight: 800;
   text-transform: uppercase;
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1;
   gap: 12px;
   letter-spacing: 1px;
   box-shadow: 0 4px 8px rgba(6, 63, 50, 0.3);
