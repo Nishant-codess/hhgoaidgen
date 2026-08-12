@@ -63,6 +63,40 @@
   animation: lpOrbBreathe 12s ease-in-out infinite reverse;
 }
 
+/* Animated 2:47 PM Studio Badge — Top Left */
+.studio-badge-link {
+  position: absolute;
+  top: 24px;
+  left: 28px;
+  z-index: 100;
+  display: inline-block;
+  opacity: 0.88;
+  animation: studioBadgeFloat 4.5s ease-in-out infinite;
+  transition: opacity 0.25s ease, filter 0.25s ease;
+}
+
+.studio-badge-link:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 16px rgba(245, 216, 0, 0.7));
+  animation-play-state: paused;
+}
+
+.studio-badge-img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+@keyframes studioBadgeFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(-1.5deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.5deg);
+  }
+}
+
 /* Hero Section */
 .hero-section {
   position: relative;
@@ -555,6 +589,13 @@
   }
   .signpost-strip {
     padding: 48px 16px;
+  }
+  .studio-badge-link {
+    top: 14px;
+    left: 16px;
+  }
+  .studio-badge-img {
+    height: 32px;
   }
 }
 

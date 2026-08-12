@@ -30,6 +30,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
       {/* Hero Section */}
       <section className="hero-section">
+        {/* Top-Left Animated 2:47 PM Studio Badge */}
+        <a
+          href="https://hhgoa.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="studio-badge-link"
+          title="2:47 PM Studio — Hackathon Organizers"
+        >
+          <img
+            src="/assets/logos/2-47.svg"
+            alt="2:47 PM Studio"
+            className="studio-badge-img"
+          />
+        </a>
+
         <div className="hero-inner">
           {/* Eyebrow Pill */}
           <div className="hero-eyebrow-badge">
