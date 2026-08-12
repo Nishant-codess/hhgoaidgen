@@ -6,12 +6,17 @@ import { BuilderForm } from './components/builder/BuilderForm';
 import { exportPassAsPng, exportPassAsPDF } from './lib/exportPass';
 import { shareNativeOrFallback } from './lib/shareToX';
 import { PalmIllustration } from './assets/illustrations/Palm';
-import { SunIllustration } from './assets/illustrations/Sun';
+import { SiteHeader } from './components/layout/SiteHeader';
+import { SiteFooter } from './components/layout/SiteFooter';
+import { LandingPage } from './components/landing/LandingPage';
+import { VibeCheck } from './components/vibecheck/VibeCheck';
 import './index.css';
 
 export function App() {
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const [isExporting, setIsExporting] = useState(false);
+  const [currentView, setCurrentView] = useState<'landing' | 'generator'>('landing');
+  const [showVibeCheck, setShowVibeCheck] = useState<boolean>(false);
+  const [isExporting, setIsExporting] = useState<boolean>(false);
   const [notification, setNotification] = useState<string | null>(null);
 
   // Initial demo builder profile state
@@ -104,83 +109,95 @@ export function App() {
       <div className="app-bg-gradient" />
       <div className="app-bg-texture" />
 
-      {/* Top Navigation Bar */}
-      <header className="app-navbar">
-        <div className="nav-brand">
-          <div className="nav-hh-logo">HH</div>
-          <div className="nav-brand-text">
-            <span className="brand-main">HACKER HOUSE GOA 2026</span>
-            <span className="brand-sub">BUILDER PASS ENGINE</span>
-          </div>
-        </div>
+      {/* Shared Site Header */}
+      <SiteHeader
+        currentView={currentView}
+        onNavigate={(view) => setCurrentView(view)}
+        onOpenVibeCheck={() => setShowVibeCheck(true)}
+      />
 
-        <div className="nav-badge">
-          <SunIllustration size={18} color="#F2C230" />
-          <span>GOA, INDIA · 28-31 OCT 2026</span>
-        </div>
-      </header>
+      {/* Main View Routing */}
+      {currentView === 'landing' ? (
+        <LandingPage
+          onNavigateToGenerator={() => setCurrentView('generator')}
+          onOpenVibeCheck={() => setShowVibeCheck(true)}
+        />
+      ) : (
+        <main className="app-main-content">
+          <div className="content-container">
+            {/* Left Column: Form Controls */}
+            <div className="panel-form-column">
+              <BuilderForm
+                profile={profile}
+                onChange={handleProfileChange}
+                onGenerateNewId={handleGenerateNewId}
+                onDownload={handleDownload}
+                onDownloadPDF={handleDownloadPDF}
+                onShare={handleShare}
+                isExporting={isExporting}
+              />
+            </div>
 
-      {/* Main Two-Panel Layout */}
-      <main className="app-main-content">
-        <div className="content-container">
-          {/* Left Column: Form Controls */}
-          <div className="panel-form-column">
-            <BuilderForm
-              profile={profile}
-              onChange={handleProfileChange}
-              onGenerateNewId={handleGenerateNewId}
-              onDownload={handleDownload}
-              onDownloadPDF={handleDownloadPDF}
-              onShare={handleShare}
-              isExporting={isExporting}
-            />
-          </div>
-
-          {/* Right Column: Live Card Renderer & Preview */}
-          <div className="panel-preview-column">
-            <div className="preview-sticky-wrapper">
-              <div className="preview-header-bar">
-                <div className="live-indicator">
-                  <span className="pulse-dot" /> LIVE CARD PREVIEW
+            {/* Right Column: Live Card Renderer & Preview */}
+            <div className="panel-preview-column">
+              <div className="preview-sticky-wrapper">
+                <div className="preview-header-bar">
+                  <div className="live-indicator">
+                    <span className="pulse-dot" /> LIVE CARD PREVIEW
+                  </div>
+                  <div className="preview-hint">
+                    {profile.templateTheme === 'light' ? 'LIGHT BEACH PASSPORT' : 'NEON CYBERPUNK'}
+                  </div>
                 </div>
-                <div className="preview-hint">
-                  {profile.templateTheme === 'light' ? 'LIGHT BEACH PASSPORT' : 'NEON CYBERPUNK'}
+
+                {/* Card Canvas */}
+                <div className="card-renderer-stage">
+                  <BuilderPass ref={cardRef} profile={profile} />
                 </div>
-              </div>
 
-              {/* Card Canvas */}
-              <div className="card-renderer-stage">
-                <BuilderPass ref={cardRef} profile={profile} />
-              </div>
-
-              {/* Quick Actions under preview */}
-              <div className="preview-bottom-bar" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                <button
-                  type="button"
-                  className="quick-btn download"
-                  onClick={handleDownload}
-                  disabled={isExporting}
-                  style={{ flex: 1 }}
-                >
-                  ⚡ PNG (2160×2700)
-                </button>
-                <button
-                  type="button"
-                  className="quick-btn download"
-                  onClick={handleDownloadPDF}
-                  disabled={isExporting}
-                  style={{ flex: 1, background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)' }}
-                >
-                  📄 4K PDF
-                </button>
-                <button type="button" className="quick-btn share" onClick={handleShare} style={{ flex: '1 1 100%' }}>
-                  🌴 Share #FrameInGoa
-                </button>
+                {/* Quick Actions under preview */}
+                <div className="preview-bottom-bar" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    className="quick-btn download"
+                    onClick={handleDownload}
+                    disabled={isExporting}
+                    style={{ flex: 1 }}
+                  >
+                    ⚡ PNG (2160×2700)
+                  </button>
+                  <button
+                    type="button"
+                    className="quick-btn download"
+                    onClick={handleDownloadPDF}
+                    disabled={isExporting}
+                    style={{ flex: 1, background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)' }}
+                  >
+                    📄 4K PDF
+                  </button>
+                  <button type="button" className="quick-btn share" onClick={handleShare} style={{ flex: '1 1 100%' }}>
+                    🌴 Share #FrameInGoa
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      )}
+
+      {/* Shared Site Footer */}
+      <SiteFooter />
+
+      {/* Builder Vibe Check Quiz Modal */}
+      {showVibeCheck && (
+        <VibeCheck
+          onClose={() => setShowVibeCheck(false)}
+          onNavigateToGenerator={() => {
+            setShowVibeCheck(false);
+            setCurrentView('generator');
+          }}
+        />
+      )}
 
       {/* Toast Notification */}
       {notification && (
