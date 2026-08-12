@@ -1,0 +1,268 @@
+/* ==========================================================================
+   LANDING PAGE STYLES — Hero, Feature Cards, About & Signpost
+   ========================================================================== */
+
+.landing-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Background & Ambient Orbs */
+.landing-bg-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-bg-img-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.38;
+  mix-blend-mode: luminosity;
+  filter: contrast(1.1) brightness(0.9);
+}
+
+.hero-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(5, 44, 23, 0.4) 0%, #052C17 85%),
+              linear-gradient(to bottom, rgba(5, 44, 23, 0.9) 0%, transparent 40%, #052C17 95%);
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+  will-change: opacity, transform;
+}
+
+.orb-top-left {
+  top: -10%;
+  left: 15%;
+  width: clamp(240px, 35vw, 550px);
+  height: clamp(240px, 35vw, 550px);
+  background: radial-gradient(circle, rgba(245, 216, 0, 0.22) 0%, transparent 70%);
+  animation: lpOrbBreathe 9s ease-in-out infinite;
+}
+
+.orb-bottom-right {
+  bottom: -5%;
+  right: 10%;
+  width: clamp(200px, 30vw, 480px);
+  height: clamp(200px, 30vw, 480px);
+  background: radial-gradient(circle, rgba(255, 45, 132, 0.18) 0%, transparent 70%);
+  animation: lpOrbBreathe 12s ease-in-out infinite reverse;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  z-index: 10;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  animation: lpFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-inner {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+}
+
+/* Eyebrow Badge */
+.hero-eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border-radius: var(--r-pill);
+  background: rgba(245, 216, 0, 0.12);
+  border: 1px solid rgba(245, 216, 0, 0.35);
+  color: var(--brand-yellow);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--brand-yellow);
+  box-shadow: 0 0 10px var(--brand-yellow);
+  animation: blinkDot 1.6s ease-in-out infinite;
+}
+
+/* Hero Title Graphic Lockup */
+.hero-title-box {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  margin: 8px 0;
+}
+
+.hero-logo-img {
+  height: clamp(80px, 16vw, 190px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  animation: pulseGlow 7s ease-in-out infinite;
+}
+
+.hero-goa-stamp-wrap {
+  position: absolute;
+  right: -8%;
+  bottom: -15%;
+  z-index: 15;
+  pointer-events: none;
+  animation: floatUpNDown 5.5s ease-in-out infinite;
+}
+
+.hero-goa-stamp-img {
+  height: clamp(50px, 10vw, 115px);
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 18px rgba(255, 45, 132, 0.85));
+}
+
+/* Subtitle & CTA Row */
+.hero-subtitle {
+  font-size: clamp(15px, 2vw, 19px);
+  color: rgba(250, 250, 248, 0.88);
+  max-width: 580px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.hero-subtitle strong {
+  color: var(--brand-yellow);
+  font-weight: 700;
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.btn-hero-primary {
+  background: var(--brand-yellow);
+  color: var(--brand-green-dark);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  padding: 16px 36px;
+  border-radius: var(--r-lg);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 32px rgba(245, 216, 0, 0.35), 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-hero-primary:hover {
+  background: var(--brand-white);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 0 48px rgba(245, 216, 0, 0.55), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.btn-hero-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: var(--brand-white);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 15px 28px;
+  border-radius: var(--r-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-hero-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(245, 216, 0, 0.5);
+  color: var(--brand-yellow);
+  transform: translateY(-2px);
+}
+
+/* Event Subbar Pill */
+.hero-subbar-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 24px;
+  border-radius: var(--r-lg);
+  background: rgba(1, 18, 8, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(245, 216, 0, 0.25);
+  color: var(--brand-yellow);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  margin-top: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Responsive Rules for Hero */
+@media (max-width: 640px) {
+  .hero-section {
+    padding: 40px 16px;
+    min-height: 80vh;
+  }
+  .hero-goa-stamp-wrap {
+    right: -4%;
+    bottom: -20%;
+  }
+  .btn-hero-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+  .btn-hero-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 20px;
+    font-size: 14px;
+  }
+  .hero-subbar-pill {
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 16px;
+    font-size: 11px;
+  }
+}
