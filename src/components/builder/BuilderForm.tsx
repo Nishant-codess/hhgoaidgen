@@ -2,7 +2,7 @@ import React from 'react';
 import { BuilderProfile } from '../../types/builder';
 import { BUILDER_CLASSES } from '../../data/builderClasses';
 import { PhotoUploader } from './PhotoUploader';
-import { Download, Share2, RefreshCw, Sparkles, Palette } from 'lucide-react';
+import { Download, Share2, RefreshCw, Sparkles, Palette, Sun, Zap } from 'lucide-react';
 
 interface BuilderFormProps {
   profile: BuilderProfile;
@@ -47,14 +47,14 @@ export const BuilderForm: React.FC<BuilderFormProps> = ({
               className={`theme-toggle-btn ${profile.templateTheme === 'light' ? 'active' : ''}`}
               onClick={() => onChange({ templateTheme: 'light' })}
             >
-              🌴 Light Beach Passport
+              <Sun size={14} style={{ verticalAlign: 'middle', marginRight: '6px' }} /> Light Beach Passport
             </button>
             <button
               type="button"
               className={`theme-toggle-btn ${profile.templateTheme === 'neon' ? 'active' : ''}`}
               onClick={() => onChange({ templateTheme: 'neon' })}
             >
-              ⚡ Neon Cyberpunk
+              <Zap size={14} style={{ verticalAlign: 'middle', marginRight: '6px' }} /> Neon Cyberpunk
             </button>
           </div>
         </div>
@@ -126,7 +126,7 @@ export const BuilderForm: React.FC<BuilderFormProps> = ({
           >
             {BUILDER_CLASSES.map((c) => (
               <option key={c.id} value={c.id}>
-                {c.icon} {c.name} — {c.description}
+                {c.name} — {c.description}
               </option>
             ))}
           </select>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Zap } from 'lucide-react';
 import './layout.css';
 
 export const SiteFooter: React.FC = () => {
@@ -27,7 +28,7 @@ export const SiteFooter: React.FC = () => {
         </div>
 
         <div className="footer-team-credit">
-          Built with 🦈 by <strong>GOA SHARK DOO DOO</strong> for HH Goa 2026
+          Built with <Zap size={13} color="var(--brand-yellow)" style={{ display: 'inline', verticalAlign: 'middle', margin: '0 2px' }} /> by <strong>GOA SHARK DOO DOO</strong> for HH Goa 2026
         </div>
       </div>
     </footer>

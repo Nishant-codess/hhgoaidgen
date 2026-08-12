@@ -1,5 +1,5 @@
 export function shareToX(builderName: string, builderId: string): void {
-  const text = `Just generated my Hacker House Goa 2026 Builder Pass! 🌴🌊\n\nI'm heading to Goa to build and ship with 247 elite builders.\n\nBuilder ID: ${builderId}\nName: ${builderName}`;
+  const text = `Just generated my Hacker House Goa 2026 Builder Pass!\n\nI'm heading to Goa to build and ship with 247 elite builders.\n\nBuilder ID: ${builderId}\nName: ${builderName}`;
   const hashtag = 'FrameInGoa';
   const url = 'https://hhgoa.com';
 
@@ -17,7 +17,7 @@ export async function shareNativeOrFallback(
 ): Promise<void> {
   const shareData = {
     title: 'HH Goa 2026 Builder Pass',
-    text: `Just generated my Hacker House Goa 2026 Builder Pass! 🌴 #FrameInGoa (ID: ${builderId})`,
+    text: `Just generated my Hacker House Goa 2026 Builder Pass! #FrameInGoa (ID: ${builderId})`,
     url: 'https://hhgoa.com',
   };
 

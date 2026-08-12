@@ -1,4 +1,5 @@
 import React from 'react';
+import { Sun, Terminal, Rocket, Sparkles, Target } from 'lucide-react';
 import { GoldenSunScene } from './GoldenSunScene';
 import './landing.css';
 
@@ -81,14 +82,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               className="btn-hero-primary"
               onClick={onNavigateToGenerator}
             >
-              CREATE YOUR PASS ✦
+              CREATE YOUR PASS <Sparkles size={16} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '6px' }} />
             </button>
             <button
               type="button"
               className="btn-hero-secondary"
               onClick={onOpenVibeCheck}
             >
-              BUILDER VIBE CHECK 🎯
+              BUILDER VIBE CHECK <Target size={16} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '6px' }} />
             </button>
           </div>
 
@@ -110,7 +111,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               role="button"
               tabIndex={0}
             >
-              <span className="feature-card-icon">🏖️</span>
+              <div className="feature-card-icon"><Sun size={32} color="var(--brand-yellow)" /></div>
               <span className="feature-card-tag">LIGHT BEACH PASSPORT</span>
               <h3 className="feature-card-title">Tropical Passport</h3>
               <p className="feature-card-desc">
@@ -124,7 +125,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               role="button"
               tabIndex={0}
             >
-              <span className="feature-card-icon">🌃</span>
+              <div className="feature-card-icon"><Terminal size={32} color="var(--brand-pink)" /></div>
               <span className="feature-card-tag">NEON CYBERPUNK</span>
               <h3 className="feature-card-title">Hacker Terminal</h3>
               <p className="feature-card-desc">
@@ -138,7 +139,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               role="button"
               tabIndex={0}
             >
-              <span className="feature-card-icon">🚀</span>
+              <div className="feature-card-icon"><Rocket size={32} color="var(--brand-yellow)" /></div>
               <span className="feature-card-tag">INSTANT SOCIAL SHARE</span>
               <h3 className="feature-card-title">Share #FrameInGoa</h3>
               <p className="feature-card-desc">

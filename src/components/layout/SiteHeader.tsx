@@ -1,4 +1,5 @@
 import React from 'react';
+import { Sparkles } from 'lucide-react';
 import './layout.css';
 
 interface SiteHeaderProps {
@@ -51,7 +52,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             onClick={onOpenVibeCheck}
             title="Take the Builder Vibe Check"
           >
-            🎯 VIBE CHECK
+            <Sparkles size={14} style={{ verticalAlign: 'middle', marginRight: '4px' }} /> VIBE CHECK
           </button>
 
           <button
@@ -59,7 +60,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             className="nav-create-btn"
             onClick={() => onNavigate('generator')}
           >
-            {currentView === 'generator' ? '✦ PASS EDITOR' : 'CREATE PASS ✦'}
+            {currentView === 'generator' ? 'PASS EDITOR' : 'CREATE PASS'}
           </button>
         </nav>
       </div>

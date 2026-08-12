@@ -5,6 +5,7 @@ import { BuilderPass } from './components/pass/BuilderPass';
 import { BuilderForm } from './components/builder/BuilderForm';
 import { exportPassAsPng, exportPassAsPDF } from './lib/exportPass';
 import { shareNativeOrFallback } from './lib/shareToX';
+import { Download, FileText, Share2 } from 'lucide-react';
 import { PalmIllustration } from './assets/illustrations/Palm';
 import { SiteHeader } from './components/layout/SiteHeader';
 import { SiteFooter } from './components/layout/SiteFooter';
@@ -62,10 +63,10 @@ export function App() {
     try {
       const fileName = `${profile.name.replace(/\s+/g, '_')}_HH_Goa_2026_Pass.png`;
       await exportPassAsPng(cardRef.current, fileName);
-      showToast('🎉 High-resolution PNG downloaded successfully!');
+      showToast('High-resolution PNG downloaded successfully!');
     } catch (err) {
       console.error(err);
-      showToast('❌ Export failed. Please try again.');
+      showToast('Export failed. Please try again.');
     } finally {
       setIsExporting(false);
     }
@@ -77,10 +78,10 @@ export function App() {
     try {
       const fileName = `${profile.name.replace(/\s+/g, '_')}_HH_Goa_2026_Pass.pdf`;
       await exportPassAsPDF(cardRef.current, fileName);
-      showToast('🎉 4K PDF downloaded successfully!');
+      showToast('4K PDF downloaded successfully!');
     } catch (err) {
       console.error(err);
-      showToast('❌ PDF Export failed. Please try again.');
+      showToast('PDF Export failed. Please try again.');
     } finally {
       setIsExporting(false);
     }
@@ -88,7 +89,7 @@ export function App() {
 
   const handleShare = async () => {
     try {
-      showToast('🚀 Opening Share flow for #FrameInGoa...');
+      showToast('Opening Share flow for #FrameInGoa...');
       let imageDataUrl: string | undefined;
       if (cardRef.current) {
         try {
@@ -164,21 +165,21 @@ export function App() {
                     className="quick-btn download"
                     onClick={handleDownload}
                     disabled={isExporting}
-                    style={{ flex: 1 }}
+                    style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                   >
-                    ⚡ PNG (2160×2700)
+                    <Download size={14} /> PNG (2160×2700)
                   </button>
                   <button
                     type="button"
                     className="quick-btn download"
                     onClick={handleDownloadPDF}
                     disabled={isExporting}
-                    style={{ flex: 1, background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)' }}
+                    style={{ flex: 1, background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                   >
-                    📄 4K PDF
+                    <FileText size={14} /> 4K PDF
                   </button>
-                  <button type="button" className="quick-btn share" onClick={handleShare} style={{ flex: '1 1 100%' }}>
-                    🌴 Share #FrameInGoa
+                  <button type="button" className="quick-btn share" onClick={handleShare} style={{ flex: '1 1 100%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                    <Share2 size={14} /> Share #FrameInGoa
                   </button>
                 </div>
               </div>
