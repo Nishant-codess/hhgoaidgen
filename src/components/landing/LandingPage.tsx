@@ -81,6 +81,76 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
         </div>
       </section>
+
+      {/* About Section Strip */}
+      <section className="about-strip">
+        <div className="about-inner">
+          <div className="about-grid">
+            <div className="about-img-card">
+              <img
+                src="/assets/decorations/beach_hut.png"
+                alt="Hacker House Beach Hut"
+                className="about-img"
+              />
+            </div>
+            <div className="about-text">
+              <div className="about-label">OFFICIAL EVENT PASS ENGINE</div>
+              <h2 className="about-heading">Your Ticket to Paradise</h2>
+              <p className="about-desc">
+                Hacker House Goa 2026 — <strong>247 builders</strong>. 4 days. Private
+                beach resort in Goa, India. Oct 28–31, 2026. Less noise. More ships.
+              </p>
+              <p className="about-desc">
+                Generate your custom pass, export in 4K, and post on X with{' '}
+                <strong>#FrameInGoa</strong> to get tracked on the Radar.
+              </p>
+              <div className="about-stats-row">
+                <div className="stat-item">
+                  <span className="stat-num">247</span>
+                  <span className="stat-lbl">Builders</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-num">4</span>
+                  <span className="stat-lbl">Days</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-num">20K+</span>
+                  <span className="stat-lbl">Applicants</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-num">1</span>
+                  <span className="stat-lbl">Paradise</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Signpost CTA Section */}
+      <section className="signpost-strip">
+        <div className="signpost-inner">
+          <img
+            src="/assets/decorations/signpost.png"
+            alt="Goa Beach Signpost"
+            className="signpost-img"
+          />
+          <div className="signpost-cta-content">
+            <h3 className="signpost-title">Ready to Board?</h3>
+            <p className="signpost-desc">
+              Upload your photo and generate your unique HH Goa 2026 pass in seconds.
+            </p>
+            <button
+              type="button"
+              className="btn-hero-primary"
+              onClick={onNavigateToGenerator}
+            >
+              GENERATE MY PASS →
+            </button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
+
