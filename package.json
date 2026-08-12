@@ -9,13 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/three": "^0.185.4",
     "bwip-js": "^4.5.1",
     "html-to-image": "^1.11.11",
     "jspdf": "^4.2.1",
     "lucide-react": "^0.475.0",
     "qrcode": "^1.5.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@types/bwip-js": "^3.2.3",

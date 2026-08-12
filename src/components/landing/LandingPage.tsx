@@ -1,4 +1,5 @@
 import React from 'react';
+import { GoldenSunScene } from './GoldenSunScene';
 import './landing.css';
 
 interface LandingPageProps {
@@ -12,8 +13,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 }) => {
   return (
     <div className="landing-container">
-      {/* Background & Ambient Orbs */}
+      {/* Background & 3D Three.js Golden Sun Layer */}
       <div className="landing-bg-layer">
+        <GoldenSunScene />
         <img
           src="/assets/decorations/beach_bg.png"
           alt=""
@@ -24,6 +26,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         <div className="ambient-orb orb-top-left" />
         <div className="ambient-orb orb-bottom-right" />
       </div>
+
 
       {/* Hero Section */}
       <section className="hero-section">
