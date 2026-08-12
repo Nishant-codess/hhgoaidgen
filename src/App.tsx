@@ -10,6 +10,7 @@ import { SiteHeader } from './components/layout/SiteHeader';
 import { SiteFooter } from './components/layout/SiteFooter';
 import { LandingPage } from './components/landing/LandingPage';
 import { VibeCheck } from './components/vibecheck/VibeCheck';
+import { EditorParticles } from './components/pass/EditorParticles';
 import './index.css';
 
 export function App() {
@@ -124,6 +125,7 @@ export function App() {
         />
       ) : (
         <main className="app-main-content">
+          <EditorParticles />
           <div className="content-container">
             {/* Left Column: Form Controls */}
             <div className="panel-form-column">

@@ -218,6 +218,8 @@ body {
 }
 
 .content-container {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1fr 580px;
   gap: 32px;
