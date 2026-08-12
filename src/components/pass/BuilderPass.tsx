@@ -58,7 +58,7 @@ export const BuilderPass = forwardRef<HTMLDivElement, BuilderPassProps>(
       const qrColor = templateTheme === 'neon' ? '#F8FAFC' : colors.primary;
       const qrBg = templateTheme === 'neon' ? '#050816' : '#00000000';
       generateQRCodeDataUrl(
-        `https://hhgoa.com/pass/${builderId}`,
+        'https://hhgoa.com',
         qrColor,
         qrBg
       ).then(setQrSrc);
