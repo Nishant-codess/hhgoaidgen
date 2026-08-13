@@ -4,7 +4,8 @@ import { generateBuilderId, generateSerialNo } from './lib/generateId';
 import { BuilderPass } from './components/pass/BuilderPass';
 import { BuilderForm } from './components/builder/BuilderForm';
 import { exportPassAsPng, exportPassAsPDF } from './lib/exportPass';
-import { shareNativeOrFallback } from './lib/shareToX';
+import { formatShareText, shareToX } from './lib/shareToX';
+import { ShareModal } from './components/share/ShareModal';
 import { Download, FileText, Share2 } from 'lucide-react';
 import { PalmIllustration } from './assets/illustrations/Palm';
 import { SiteHeader } from './components/layout/SiteHeader';
@@ -14,6 +15,8 @@ import { VibeCheck } from './components/vibecheck/VibeCheck';
 import { EditorParticles } from './components/pass/EditorParticles';
 import './index.css';
 
+import { getDynamicFunFact } from './lib/dynamicFunFact';
+
 export function App() {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [currentView, setCurrentView] = useState<'landing' | 'generator'>('landing');
@@ -22,18 +25,26 @@ export function App() {
   const [notification, setNotification] = useState<string | null>(null);
 
   // Initial demo builder profile state
+  const initialStack = 'React · Node.js · PostgreSQL · AWS';
+  const initialRole = 'Full Stack Developer';
+  const initialClass = 'terminal-wizard';
+
   const [profile, setProfile] = useState<BuilderProfile>({
     name: 'Nishant Ranjan',
-    role: 'Full Stack Developer',
-    stack: 'React · Node.js · PostgreSQL · AWS',
-    builderClass: 'terminal-wizard',
+    role: initialRole,
+    stack: initialStack,
+    builderClass: initialClass,
     photo: null,
     builderId: 'HH-GOA-042',
     issueDate: 'OCT 2026',
     serialNo: generateSerialNo(),
     templateTheme: 'light',
-    funFact: 'I once accidentally deleted production... and survived.',
+    funFact: getDynamicFunFact({ stack: initialStack, role: initialRole, builderClass: initialClass }),
   });
+  const [shareModalData, setShareModalData] = useState<{
+    imageDataUrl: string | null;
+    shareText: string;
+  } | null>(null);
 
   const handleProfileChange = (updated: Partial<BuilderProfile>) => {
     setProfile((prev) => ({ ...prev, ...updated }));
@@ -57,16 +68,17 @@ export function App() {
     }, 3500);
   };
 
-  const handleDownload = async () => {
+  const handleDownloadPNG = async () => {
     if (!cardRef.current) return;
-    setIsExporting(true);
     try {
-      const fileName = `${profile.name.replace(/\s+/g, '_')}_HH_Goa_2026_Pass.png`;
+      setIsExporting(true);
+      showToast('Generating high-res 4K PNG pass...');
+      const fileName = `${(profile.builderId || 'HH-GOA').replace(/[^a-zA-Z0-9-]/g, '_')}_Pass.png`;
       await exportPassAsPng(cardRef.current, fileName);
-      showToast('High-resolution PNG downloaded successfully!');
+      showToast('Pass PNG downloaded successfully!');
     } catch (err) {
       console.error(err);
-      showToast('Export failed. Please try again.');
+      showToast('PNG Export failed. Please try again.');
     } finally {
       setIsExporting(false);
     }
@@ -74,9 +86,10 @@ export function App() {
 
   const handleDownloadPDF = async () => {
     if (!cardRef.current) return;
-    setIsExporting(true);
     try {
-      const fileName = `${profile.name.replace(/\s+/g, '_')}_HH_Goa_2026_Pass.pdf`;
+      setIsExporting(true);
+      showToast('Generating high-res PDF pass...');
+      const fileName = `${(profile.builderId || 'HH-GOA').replace(/[^a-zA-Z0-9-]/g, '_')}_Pass.pdf`;
       await exportPassAsPDF(cardRef.current, fileName);
       showToast('4K PDF downloaded successfully!');
     } catch (err) {
@@ -88,20 +101,58 @@ export function App() {
   };
 
   const handleShare = async () => {
+    if (!profile.photo) {
+      showToast('Please upload a photo first to share your pass!');
+      return;
+    }
+
     try {
-      showToast('Opening Share flow for #FrameInGoa...');
-      let imageDataUrl: string | undefined;
+      showToast('Preparing your pass image for #FrameInGoa...');
+      let imageDataUrl: string | null = null;
       if (cardRef.current) {
         try {
+          if (document.fonts) {
+            await document.fonts.ready;
+          }
           const { toPng } = await import('html-to-image');
-          imageDataUrl = await toPng(cardRef.current, { quality: 0.9, pixelRatio: 1.5 });
+          imageDataUrl = await toPng(cardRef.current, {
+            quality: 0.98,
+            pixelRatio: 2,
+            cacheBust: true,
+            filter: (domNode) => !(domNode instanceof HTMLElement && domNode.dataset.noExport === 'true'),
+          });
         } catch (e) {
           console.warn('Share preview capture optional:', e);
         }
       }
-      await shareNativeOrFallback(profile.name, profile.builderId, imageDataUrl);
+
+      // Copy PNG blob to clipboard & trigger auto download if image URL is ready
+      if (imageDataUrl) {
+        try {
+          const res = await fetch(imageDataUrl);
+          const blob = await res.blob();
+          if (navigator.clipboard && window.ClipboardItem) {
+            const item = new ClipboardItem({ 'image/png': blob });
+            await navigator.clipboard.write([item]);
+          }
+          const fileName = `${(profile.builderId || 'HH-GOA').replace(/[^a-zA-Z0-9-]/g, '_')}_Pass.png`;
+          const downloadLink = document.createElement('a');
+          downloadLink.download = fileName;
+          downloadLink.href = imageDataUrl;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+        } catch (err) {
+          console.warn('Clipboard / download error on share:', err);
+        }
+      }
+
+      const shareText = formatShareText(profile);
+      setShareModalData({ imageDataUrl, shareText });
     } catch (err) {
       console.error(err);
+      showToast('Share flow encountered an issue. Opening Twitter...');
+      shareToX(profile);
     }
   };
 
@@ -118,7 +169,7 @@ export function App() {
         onOpenVibeCheck={() => setShowVibeCheck(true)}
       />
 
-      {/* Main View Routing */}
+      {/* Main View Router */}
       {currentView === 'landing' ? (
         <LandingPage
           onNavigateToGenerator={() => setCurrentView('generator')}
@@ -127,60 +178,65 @@ export function App() {
       ) : (
         <main className="app-main-content">
           <EditorParticles />
+          
           <div className="content-container">
-            {/* Left Column: Form Controls */}
-            <div className="panel-form-column">
+            {/* Left Column: Form Builder & Customization Controls */}
+            <div className="form-column">
               <BuilderForm
                 profile={profile}
                 onChange={handleProfileChange}
                 onGenerateNewId={handleGenerateNewId}
-                onDownload={handleDownload}
+                onDownload={handleDownloadPNG}
                 onDownloadPDF={handleDownloadPDF}
                 onShare={handleShare}
                 isExporting={isExporting}
               />
             </div>
 
-            {/* Right Column: Live Card Renderer & Preview */}
+            {/* Right Column: Live High-Tech Pass Preview */}
             <div className="panel-preview-column">
               <div className="preview-sticky-wrapper">
                 <div className="preview-header-bar">
-                  <div className="live-indicator">
-                    <span className="pulse-dot" /> LIVE CARD PREVIEW
-                  </div>
-                  <div className="preview-hint">
-                    {profile.templateTheme === 'light' ? 'LIGHT BEACH PASSPORT' : 'NEON CYBERPUNK'}
-                  </div>
+                  <span className="live-indicator">
+                    <span className="pulse-dot" /> LIVE IDENTITY CARD PREVIEW
+                  </span>
+                  <span className="preview-hint">HD Print Ready</span>
                 </div>
 
-                {/* Card Canvas */}
-                <div className="card-renderer-stage">
-                  <BuilderPass ref={cardRef} profile={profile} />
+                <div className="card-renderer-stage" ref={cardRef}>
+                  <BuilderPass profile={profile} />
                 </div>
 
-                {/* Quick Actions under preview */}
-                <div className="preview-bottom-bar" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {/* Quick Action Bar under pass preview */}
+                <div className="preview-bottom-bar">
                   <button
                     type="button"
                     className="quick-btn download"
-                    onClick={handleDownload}
+                    onClick={handleDownloadPNG}
                     disabled={isExporting}
-                    style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                   >
-                    <Download size={14} /> PNG (2160×2700)
+                    <Download size={15} /> Save PNG
                   </button>
+
                   <button
                     type="button"
-                    className="quick-btn download"
+                    className="quick-btn pdf"
                     onClick={handleDownloadPDF}
                     disabled={isExporting}
-                    style={{ flex: 1, background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                   >
-                    <FileText size={14} /> 4K PDF
+                    <FileText size={15} /> Save 4K PDF
                   </button>
-                  <button type="button" className="quick-btn share" onClick={handleShare} style={{ flex: '1 1 100%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-                    <Share2 size={14} /> Share #FrameInGoa
-                  </button>
+
+                  {profile.photo && (
+                    <button
+                      type="button"
+                      className="quick-btn share"
+                      onClick={handleShare}
+                      disabled={isExporting}
+                    >
+                      <Share2 size={15} /> Share #FrameInGoa
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -199,6 +255,17 @@ export function App() {
             setShowVibeCheck(false);
             setCurrentView('generator');
           }}
+        />
+      )}
+
+      {/* Share to X Interactive Guidance Modal */}
+      {shareModalData && (
+        <ShareModal
+          profile={profile}
+          imageDataUrl={shareModalData.imageDataUrl}
+          shareText={shareModalData.shareText}
+          onClose={() => setShareModalData(null)}
+          onLaunchTwitter={() => shareToX(profile)}
         />
       )}
 

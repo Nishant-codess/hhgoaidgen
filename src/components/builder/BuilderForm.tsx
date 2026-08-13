@@ -2,6 +2,7 @@ import React from 'react';
 import { BuilderProfile } from '../../types/builder';
 import { BUILDER_CLASSES } from '../../data/builderClasses';
 import { PhotoUploader } from './PhotoUploader';
+import { getDynamicFunFact } from '../../lib/dynamicFunFact';
 import { Download, Share2, RefreshCw, Sparkles, Palette, Sun, Zap } from 'lucide-react';
 
 interface BuilderFormProps {
@@ -107,10 +108,44 @@ export const BuilderForm: React.FC<BuilderFormProps> = ({
             type="text"
             className="form-input"
             value={profile.stack}
-            onChange={(e) => onChange({ stack: e.target.value })}
+            onChange={(e) => {
+              const newStack = e.target.value;
+              const dynamicFact = getDynamicFunFact({ ...profile, stack: newStack });
+              onChange({ stack: newStack, funFact: dynamicFact });
+            }}
             placeholder="e.g. React · Node.js · PostgreSQL · AWS"
           />
           <div className="input-hint">Separate technologies with dots or commas</div>
+        </div>
+
+        {/* Dynamic Fun Fact Field */}
+        <div className="form-group">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <label htmlFor="funfact-input" className="form-label">
+              TECH FUN FACT / TRIVIA
+            </label>
+            <button
+              type="button"
+              className="btn-regen-id"
+              style={{ padding: '2px 8px', fontSize: '11px' }}
+              onClick={() => {
+                const newFact = getDynamicFunFact(profile, true);
+                onChange({ funFact: newFact });
+              }}
+              title="Generate new random fun fact based on your tech stack"
+            >
+              <Zap size={12} /> New Random Fact
+            </button>
+          </div>
+          <input
+            id="funfact-input"
+            type="text"
+            className="form-input"
+            value={profile.funFact || ''}
+            onChange={(e) => onChange({ funFact: e.target.value })}
+            placeholder="e.g. Spends 90% of development time fine-tuning micro-animations!"
+          />
+          <div className="input-hint">Dynamically changes for your X share post based on your Tech Stack</div>
         </div>
 
         {/* Builder Class Dropdown */}
@@ -192,14 +227,21 @@ export const BuilderForm: React.FC<BuilderFormProps> = ({
           )}
         </div>
 
-        <button
-          type="button"
-          className="btn-secondary-action share-btn"
-          onClick={onShare}
-        >
-          <Share2 size={18} />
-          Share to X (#FrameInGoa)
-        </button>
+        {profile.photo ? (
+          <button
+            type="button"
+            className="btn-secondary-action share-btn"
+            onClick={onShare}
+          >
+            <Share2 size={18} />
+            Share to X (#FrameInGoa)
+          </button>
+        ) : (
+          <div className="photo-required-share-notice">
+            <Sparkles size={14} style={{ color: 'var(--brand-yellow)' }} />
+            <span>Upload a photo above to unlock Share to X</span>
+          </div>
+        )}
       </div>
     </div>
   );
