@@ -24,7 +24,7 @@ export const BuilderPass = forwardRef<HTMLDivElement, BuilderPassProps>(
       photo = null,
       builderId = 'HH-GOA-042',
       templateTheme = 'light',
-      funFact = 'I once accidentally deleted production... and survived.',
+      stack = 'React · Node.js · PostgreSQL · AWS',
     } = profile;
 
     const displayName = (name || 'NISHANT RANJAN').toUpperCase();
@@ -185,9 +185,9 @@ export const BuilderPass = forwardRef<HTMLDivElement, BuilderPassProps>(
             {/* Column 2 */}
             <div className="grid-col col-2">
               <div className="col-header">
-                {templateTheme === 'neon' ? <span className="gradient-text">FUN FACT</span> : 'FUN FACT'}
+                {templateTheme === 'neon' ? <span className="gradient-text">TECH STACK</span> : 'TECH STACK'}
               </div>
-              <div className="fun-fact-text">{funFact}</div>
+              <div className="fun-fact-text">{stack}</div>
             </div>
 
             {/* Column 3 */}
