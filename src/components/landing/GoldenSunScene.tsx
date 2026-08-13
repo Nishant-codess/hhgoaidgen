@@ -115,58 +115,7 @@ export const GoldenSunScene: React.FC = () => {
     const coronaMesh = new THREE.Mesh(coronaGeo, coronaMat);
     sunGroup.add(coronaMesh);
 
-    // 4c. Sun Ray Starburst Spikes
-    const rayGroup = new THREE.Group();
-    const rayCount = 8;
-    const rayGeo = new THREE.PlaneGeometry(1.4, 18);
-    const rayMat = new THREE.ShaderMaterial({
-      uniforms: { uTime: { value: 0 } },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        varying vec2 vUv;
-        uniform float uTime;
-        void main() {
-          float dx = abs(vUv.x - 0.5) * 2.0;
-          float dy = abs(vUv.y - 0.5) * 2.0;
-          float alpha = (1.0 - dx) * (1.0 - dy);
-          alpha = pow(max(0.0, alpha), 2.5) * 0.28;
-          vec3 color = vec3(0.96, 0.85, 0.2);
-          gl_FragColor = vec4(color, alpha);
-        }
-      `,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-    });
-
-    for (let i = 0; i < rayCount; i++) {
-      const ray = new THREE.Mesh(rayGeo, rayMat);
-      ray.rotation.z = (i * Math.PI) / rayCount;
-      rayGroup.add(ray);
-    }
-    sunGroup.add(rayGroup);
-
-    // 5. High-Density Sun Ray Halo Ring (Refined 64 Segments)
-    const ringGeo = new THREE.RingGeometry(4.8, 6.4, 64);
-    const ringMat = new THREE.MeshBasicMaterial({
-      color: 0xf5d800,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.12,
-      wireframe: true,
-    });
-    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-    ringMesh.rotation.x = Math.PI / 3;
-    sunGroup.add(ringMesh);
-
-    // 6. Floating Firefly Particles (Builders shipping in Goa)
+    // 5. Floating Firefly Particles (Builders shipping in Goa)
     const particleCount = 180;
     const particleGeo = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
@@ -205,12 +154,9 @@ export const GoldenSunScene: React.FC = () => {
       // Update Shader Uniforms
       sunMat.uniforms.uTime.value = elapsedTime;
       coronaMat.uniforms.uTime.value = elapsedTime;
-      rayMat.uniforms.uTime.value = elapsedTime;
 
       // Gentle Rotations
       sunMesh.rotation.y = elapsedTime * 0.15;
-      rayGroup.rotation.z = elapsedTime * 0.08;
-      ringMesh.rotation.z = -elapsedTime * 0.05;
 
       // Particle floating upward animation
       const positions = particleGeo.attributes.position.array as Float32Array;
@@ -254,10 +200,6 @@ export const GoldenSunScene: React.FC = () => {
       sunMat.dispose();
       coronaGeo.dispose();
       coronaMat.dispose();
-      rayGeo.dispose();
-      rayMat.dispose();
-      ringGeo.dispose();
-      ringMat.dispose();
       particleGeo.dispose();
       particleMat.dispose();
       renderer.dispose();
